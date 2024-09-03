@@ -1,0 +1,30 @@
+﻿@page
+@model FitnessLogger.Pages.Exercises.IndexModel
+@{
+}
+
+<br>
+<h2>List of Exercises</h2>
+<a class='btn btn-primary btn-sm' href='/Exercises/Create'>New Exercise</a>
+<table class="table">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var item in Model.listExercises)
+		{
+			<tr>
+				<td>@item.id</td>
+				<td>@item.name</td>
+				<td>
+					<a class="btn btn-primary btn-sm" href="/Exercises/Edit?id=@item.id">Edit</a>
+					<a class="btn btn-danger btn-sm" href="/Exercises/Delete?id=@item.id">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

@@ -1,0 +1,49 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data.SqlClient;
+
+namespace FitnessLogger.Pages.Exercises
+{
+    public class IndexModel : PageModel
+    {
+        public List<ExerciseInfo> listExercises = new List<ExerciseInfo>();
+        public void OnGet()
+        {
+            try
+            {
+                String connectionString = "Data Source=DESKTOP-BFJFBE3;Initial Catalog=FitnessLog;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    String sql = "SELECT * FROM Exercise";
+                    using (SqlCommand command = new SqlCommand(sql, connection)) 
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ExerciseInfo exerciseInfo = new ExerciseInfo();
+                                exerciseInfo.id = "" + reader.GetInt32(0);
+                                exerciseInfo.name = reader.GetString(1);
+                                //exerciseInfo.notes = reader.GetString(2);
+
+                                listExercises.Add(exerciseInfo);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.ToString());
+            }
+		}
+    }
+
+    public class ExerciseInfo
+    {
+        public string id;
+        public string name;
+        //public string notes;
+    }
+}
