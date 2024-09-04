@@ -1,0 +1,28 @@
+﻿@page
+@using System.Data.SqlClient;
+
+@{
+    try
+    {
+        string id = Request.Query["id"];
+
+        string connectionString = "Data Source=DESKTOP-BFJFBE3;Initial Catalog=FitnessLog;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            string sql = "DELETE FROM Exercise WHERE ExerciseID=@id";
+
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@id", id);
+
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+    }
+
+    Response.Redirect("/Exercises/Index");
+}
