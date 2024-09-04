@@ -25,7 +25,16 @@ namespace FitnessLogger.Pages.Exercises
                                 ExerciseInfo exerciseInfo = new ExerciseInfo();
                                 exerciseInfo.id = "" + reader.GetInt32(0);
                                 exerciseInfo.name = reader.GetString(1);
-                                //exerciseInfo.notes = reader.GetString(2);
+
+                                //doesnt change database null values, just shows n/a on web
+                                if (reader.IsDBNull(2))
+                                {
+                                    exerciseInfo.notes = "n/a";
+                                }
+                                else
+                                {
+                                    exerciseInfo.notes = reader.GetString(2);
+                                }
 
                                 listExercises.Add(exerciseInfo);
                             }
@@ -42,8 +51,8 @@ namespace FitnessLogger.Pages.Exercises
 
     public class ExerciseInfo
     {
-        public string id;
-        public string name;
-        //public string notes;
+        public String id;
+        public String name;
+        public String notes;
     }
 }

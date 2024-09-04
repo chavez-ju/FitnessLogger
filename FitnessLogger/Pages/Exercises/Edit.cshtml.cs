@@ -30,6 +30,17 @@ namespace FitnessLogger.Pages.Exercises
                             {
                                 exerciseInfo.id = "" + reader.GetInt32(0);
                                 exerciseInfo.name = reader.GetString(1);
+
+								//doesnt change database null values, just shows n/a on web
+								if (reader.IsDBNull(2))
+								{
+									exerciseInfo.notes = "n/a";
+								}
+								else
+								{
+									exerciseInfo.notes = reader.GetString(2);
+								}
+
                             }
                         }
                     }
@@ -45,8 +56,9 @@ namespace FitnessLogger.Pages.Exercises
         {
             exerciseInfo.id = Request.Form["id"];
 			exerciseInfo.name = Request.Form["name"];
+			exerciseInfo.notes = Request.Form["notes"];
 
-            if (exerciseInfo.id.Length == 0 || exerciseInfo.name.Length == 0)
+			if (exerciseInfo.id.Length == 0 || exerciseInfo.name.Length == 0 || exerciseInfo.notes.Length == 0)
             {
                 errorMessage = "All fields are required";
                 return;
@@ -58,12 +70,13 @@ namespace FitnessLogger.Pages.Exercises
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "UPDATE Exercise " + "SET ExerciseName=@name " + "WHERE ExerciseID=@id";
+                    string sql = "UPDATE Exercise " + "SET ExerciseName=@name, Notes=@notes " + "WHERE ExerciseID=@id";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@name", exerciseInfo.name);
-                        command.Parameters.AddWithValue("@id", exerciseInfo.id);
+						command.Parameters.AddWithValue("@notes", exerciseInfo.notes);
+						command.Parameters.AddWithValue("@id", exerciseInfo.id);
 
                         command.ExecuteNonQuery();
                     }

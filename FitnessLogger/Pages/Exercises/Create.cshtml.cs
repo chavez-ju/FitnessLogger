@@ -16,8 +16,9 @@ namespace FitnessLogger.Pages.Exercises
         public void OnPost() 
         {
             exerciseInfo.name = Request.Form["name"];
+			exerciseInfo.notes = Request.Form["notes"];
 
-            if (exerciseInfo.name.Length == 0)
+			if (exerciseInfo.name.Length == 0 || exerciseInfo.notes.Length == 0)
             {
                 errorMessage = "All the fields are required";
                 return;
@@ -30,13 +31,14 @@ namespace FitnessLogger.Pages.Exercises
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO Exercise" + "(ExerciseName) VALUES " + "(@name);";
+                    string sql = "INSERT INTO Exercise" + "(ExerciseName, Notes) VALUES " + "(@name, @notes);";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@name", exerciseInfo.name);
+						command.Parameters.AddWithValue("@notes", exerciseInfo.notes);
 
-                        command.ExecuteNonQuery();
+						command.ExecuteNonQuery();
                     }
                 }
 			}
