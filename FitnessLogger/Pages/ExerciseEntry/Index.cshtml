@@ -4,8 +4,8 @@
 }
 
 <br>
-<h2>Exercise Entry for Today</h2>
-<a class='btn btn-primary btn-sm' href='/ExerciseEntry/#'>New Entry</a>
+<h2>Exercise Entries for Today</h2>
+<a class='btn btn-primary btn-sm' href='/ExerciseEntry/Create'>New Entry</a>
 <table class="table">
 	<thead>
 		<tr>
@@ -18,5 +18,21 @@
 			<th>Action</th>
 		</tr>
 	</thead>
-
+	<tbody>
+		@foreach (var item in Model.listEntries)
+		{
+			<tr>
+				<td>@item.entryID</td>
+				<td>@item.exerciseID</td>
+				<td>@item.weight</td>
+				<td>@item.sets</td>
+				<td>@item.repetitions</td>
+				<td>@item.notes</td>
+				<td>
+					<a class="btn btn-primary btn-sm" href="/ExerciseEntry/#?id=#">Edit</a>
+					<a class="btn btn-danger btn-sm" href="/ExerciseEntry/#?id=#">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

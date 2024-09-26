@@ -37,7 +37,7 @@ namespace FitnessLogger.Pages.ExerciseEntry
 								}
 								else
 								{
-									info.notes = reader.GetString(2);
+									info.notes = reader.GetString(5);
 								}
 
                                 listEntries.Add(info);

@@ -49,6 +49,7 @@ namespace FitnessLogger.Pages.Exercises
             }
 
             exerciseInfo.name = "";
+            exerciseInfo.notes = "";
             successMessage = "New Exercise Added Correctly";
 
             Response.Redirect("/Exercises/Index");
