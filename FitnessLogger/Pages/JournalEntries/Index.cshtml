@@ -2,3 +2,40 @@
 @model FitnessLogger.Pages.JournalEntries.IndexModel
 @{
 }
+
+<br>
+<h2>List of Journal Entries</h2>
+<a class='btn btn-primary btn-sm' href='/Exercises/#'>New Entry</a>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>Entry Title</th>
+			<th>Exercise Name</th>
+			<th>Weight</th>
+			<th>Sets</th>
+			<th>Repetitions</th>
+			<th>Notes</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var item in Model.listEntries)
+		{
+			<tr>
+				<td>@item.date</td>
+				<td>@item.title</td>
+				<td>@item.exerciseName</td>
+				<td>@item.weight</td>
+				<td>@item.sets</td>
+				<td>@item.repetitions</td>
+				<td>@item.entryNotes</td>
+				<td>
+					<a class="btn btn-primary btn-sm" href="/JournalEntries/Edit?id=#">Edit</a>
+					<a class="btn btn-danger btn-sm" href="/JournalEntries/Delete?id=#">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+
+</table>
