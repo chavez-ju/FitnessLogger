@@ -68,5 +68,7 @@ namespace FitnessLogger.Pages.JournalEntries
 		public string sets;
 		public string repetitions;
 		public string entryNotes;
+		public string entryID;
+		public string exerciseID;
 	}
 }
