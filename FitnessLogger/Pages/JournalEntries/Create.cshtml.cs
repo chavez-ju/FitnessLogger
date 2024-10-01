@@ -68,7 +68,7 @@ namespace FitnessLogger.Pages.JournalEntries
 						{
 							while (reader.Read())
 							{
-								if (reader.GetString(1) == journalEntryInfo.date)
+								if (FormatDate(reader.GetDateTime(1).ToString()) == journalEntryInfo.date)
 								{
 									jCheck = true;
 									journalEntryInfo.entryID = reader.GetInt32(0).ToString();
@@ -85,6 +85,7 @@ namespace FitnessLogger.Pages.JournalEntries
 						using (SqlCommand command = new SqlCommand(sql, connection))
 						{
 							command.Parameters.AddWithValue("@exerciseName", journalEntryInfo.exerciseName);
+							command.Parameters.Add("@exercise_ID", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output;
 							command.ExecuteNonQuery();
 							journalEntryInfo.exerciseID = (command.Parameters["@exercise_ID"].Value).ToString();
 						}
@@ -98,6 +99,7 @@ namespace FitnessLogger.Pages.JournalEntries
 						{
 							command.Parameters.AddWithValue("@date", journalEntryInfo.date);
 							command.Parameters.AddWithValue("@title", journalEntryInfo.title);
+							command.Parameters.Add("@entry_ID", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output;
 							command.ExecuteNonQuery();
 							journalEntryInfo.entryID = (command.Parameters["@entry_ID"].Value).ToString();
 						}
@@ -138,5 +140,10 @@ namespace FitnessLogger.Pages.JournalEntries
 
 			Response.Redirect("/JournalEntries/Index");
 		}
-    }
+
+		public string FormatDate(string dateTime)
+		{
+			return dateTime.Substring(0, dateTime.IndexOf(" "));
+		}
+	}
 }
