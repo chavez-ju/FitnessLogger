@@ -1,0 +1,27 @@
+﻿@page
+@using System.Data.SqlClient;
+@using Dapper;
+
+@{
+	try
+	{
+		string _entryID = Request.Query["entryID"];
+		string _exerciseID = Request.Query["exerciseID"];
+
+		string connectionString = "Data Source=DESKTOP-BFJFBE3;Initial Catalog=FitnessLog;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+		using (SqlConnection connection = new SqlConnection(connectionString))
+		{
+			connection.Open();
+			string sql = "DELETE FROM Entry_Exercise WHERE EntryID = @entryID AND ExerciseID = @exerciseID";
+
+			connection.Execute(sql, new { entryID = _entryID, exerciseID = _exerciseID });
+
+
+		}
+	} 
+	catch (Exception ex)
+	{
+	}
+
+	Response.Redirect("/JournalEntries/Index");
+}

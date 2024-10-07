@@ -16,7 +16,7 @@ namespace FitnessLogger.Pages.JournalEntries
 				using (SqlConnection connection = new SqlConnection(connectionString))
 				{
 					connection.Open();
-					string sql = "Select\r\nEntryDate,\r\nTitle,\r\nExerciseName,\r\nExerciseWeight,\r\nExerciseSets,\r\nExerciseRepetitions,\r\ndbo.Entry_Exercise.Notes\r\nFrom dbo.Journal_Entries\r\nJoin dbo.Entry_Exercise on dbo.Journal_Entries.EntryID = dbo.Entry_Exercise.EntryID\r\nJoin dbo.Exercise on dbo.Entry_Exercise.ExerciseID = dbo.Exercise.ExerciseID";
+					string sql = "Select\r\nEntryDate,\r\nTitle,\r\nExerciseName,\r\nExerciseWeight,\r\nExerciseSets,\r\nExerciseRepetitions,\r\ndbo.Entry_Exercise.Notes,\r\ndbo.Entry_Exercise.EntryID,\r\ndbo.Entry_Exercise.ExerciseID\r\nFrom dbo.Journal_Entries\r\nJoin dbo.Entry_Exercise on dbo.Journal_Entries.EntryID = dbo.Entry_Exercise.EntryID\r\nJoin dbo.Exercise on dbo.Entry_Exercise.ExerciseID = dbo.Exercise.ExerciseID";
 					using (SqlCommand command = new SqlCommand(sql, connection))
 					{
 						using (SqlDataReader reader = command.ExecuteReader())
@@ -39,6 +39,9 @@ namespace FitnessLogger.Pages.JournalEntries
 								{
 									journalEntry.entryNotes = reader.GetString(6);
 								}
+
+								journalEntry.entryID = "" + reader.GetInt32(7);
+								journalEntry.exerciseID = "" + reader.GetInt32(8);
 
 								listEntries.Add(journalEntry);
 							}

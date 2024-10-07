@@ -1,7 +1,7 @@
-using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
+using Dapper;
 
 namespace FitnessLogger.Pages.Exercises
 {
