@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
+using Dapper;
 
 namespace FitnessLogger.Pages.Exercises
 {
@@ -16,6 +17,7 @@ namespace FitnessLogger.Pages.Exercises
                 {
                     connection.Open();
                     String sql = "SELECT * FROM Exercise";
+
                     using (SqlCommand command = new SqlCommand(sql, connection)) 
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -51,8 +53,8 @@ namespace FitnessLogger.Pages.Exercises
 
     public class ExerciseInfo
     {
-        public String id;
-        public String name;
-        public String notes;
-    }
+        public string id { get; set; }
+        public String name { get; set; }
+		public String notes { get; set; }
+	}
 }

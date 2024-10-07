@@ -1,3 +1,4 @@
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data.SqlClient;
@@ -33,13 +34,15 @@ namespace FitnessLogger.Pages.Exercises
                     connection.Open();
                     string sql = "INSERT INTO Exercise" + "(ExerciseName, Notes) VALUES " + "(@name, @notes);";
 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    connection.Query(sql, exerciseInfo);
+
+/*                    using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@name", exerciseInfo.name);
 						command.Parameters.AddWithValue("@notes", exerciseInfo.notes);
 
 						command.ExecuteNonQuery();
-                    }
+                    }*/
                 }
 			}
             catch (Exception ex)
